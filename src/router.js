@@ -1,5 +1,4 @@
-import Vue from 'vue'
-import Router from 'vue-router'
+import { createRouter, createWebHistory } from 'vue-router'
 import Words from './views/Words.vue'
 import New from './views/New.vue'
 import Edit from './views/Edit.vue'
@@ -15,10 +14,7 @@ const routes = [
   { path: '/test', name: 'Test', component: Test }
 ]
 
-Vue.use(Router)
-export default new Router({
-  mode: 'history',
-  base: process.env.BASE_URL,
-  linkActiveClass: 'active',
+export default createRouter({
+  history: createWebHistory(process.env.BASE_URL),
   routes
 })

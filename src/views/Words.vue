@@ -1,10 +1,37 @@
 <template>
   <div class="ui segment">
-    <h2>Words</h2>
+    <h1>Words</h1>
+    <table id="words" class="ui celled compact table">
+      <thead>
+        <tr>
+          <th>Word</th>
+          <th>German</th>
+          <th colspan="3"></th>
+        </tr>
+      </thead>
+      <tr v-for="{word, i} in words" :key="i">
+        <td>{{word.word}}</td>
+        <td>{{word.german}}</td>
+        <td width="75" class="center aligned">Show</td>
+        <td width="75" class="center aligned">Edit</td>
+        <td width="75" class="center aligned">Destroy</td>
+      </tr>
+    </table>
   </div>
 </template>
 <script>
-export default {
-  name: 'WordsView'
-}
+import api from '@/helpers/helpers.js'
+  export default {
+    name: 'words',
+    data() {
+      return {
+        words: []
+      }
+    },
+    //call api to get words
+    async mounted() {
+      this.words = await api.getWords();
+    }
+  }
+
 </script>
