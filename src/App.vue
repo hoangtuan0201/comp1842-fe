@@ -17,6 +17,7 @@
     </div>
 
     <div class="ui text container">
+       <FlashMessage />
       <div class="ui one column grid">
         <div class="column">
           <router-view />
@@ -26,9 +27,14 @@
   </div>
 </template>
 
-<script>
+<script>  
+import FlashMessage from '@/components/FlashMessage.vue';
+
 export default {
-  name: 'app'
+  name: 'app',
+  components: {
+    FlashMessage,
+  },
 };
 </script>
 

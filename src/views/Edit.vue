@@ -7,6 +7,7 @@
 <script>
 import WordForm from '@/components/WordForm.vue';
 import { api } from '@/helpers/helpers.js';
+import { showFlash } from '@/helpers/flash';
 
 export default {
   name: 'edit',
@@ -25,7 +26,7 @@ export default {
   methods: {
     createOrUpdate: async function(word) {
       await api.updateWord(word);
-      alert('Word updated successfully!');
+      showFlash('Word updated successfully!', 'success');
       //redirect to word detail page
       this.$router.push(`/words/${word._id}`);
     }

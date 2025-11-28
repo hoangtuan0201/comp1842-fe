@@ -18,13 +18,16 @@
         <td width="75" class="center aligned">
           <router-link :to="{ name: 'edit', params: { id: word._id }}">Edit</router-link>
         </td>
-        <td width="75" class="center aligned">Destroy</td>
+        <td width="75" class="center aligned" @click.prevent="onDelete(word._id)">
+          <a :href="`/words/${word._id}`">Delete</a>
+        </td>
       </tr>
     </table>
   </div>
 </template>
 <script>
 import { api } from '@/helpers/helpers.js'
+import { showFlash } from '@/helpers/flash';
   export default {
     name: 'words',
     data() {
@@ -35,7 +38,18 @@ import { api } from '@/helpers/helpers.js'
     //call api to get words
     async mounted() {
       this.words = await api.getWords();
+    },
+    methods: {
+      async onDelete(id) {
+        const sure = confirm('Are you sure you want to delete this word?');
+        if (!sure) return;
+        await api.deleteWord(id);
+        showFlash('Word deleted successfully', 'success');
+        // refresh the list
+        this.words = await api.getWords();
+      }
     }
+
   }
 
 </script>

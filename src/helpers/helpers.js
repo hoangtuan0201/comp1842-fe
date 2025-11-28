@@ -1,10 +1,19 @@
 import axios from 'axios';
+import { showFlash } from '@/helpers/flash';
+
 const baseURL = 'http://localhost:3000/words/';
 
-const handleError = fn => (...params) => 
-  fn(...params).catch(err => {
-    console.log(err)
-  });
+const handleError = fn => async (...params) => {
+  try {
+    return await fn(...params);
+  } catch (err) {
+    console.error(err);
+    const status = err?.response?.status;
+    const text = err?.response?.statusText || 'Error';
+    showFlash(`${status}: ${text}`, 'error'); // giống vm.flash(...)
+    throw err; // nếu cần bắt thêm ở component
+  }
+};
 export const api = {
   getWord: handleError(async id => {
     const res = await axios.get(baseURL + id);
