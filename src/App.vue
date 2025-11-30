@@ -1,65 +1,130 @@
 <template>
-  <div id="app">
-    <div class="ui inverted segment navbar">
-      <div class="ui center aligned container">
-        <div class="ui large secondary inverted pointing menu compact">
-          <router-link to="/words" exact class="item">
-            <i class="comment outline icon"></i> Words
-          </router-link>
-          <router-link to="/words/new" class="item">
-            <i class="plus circle icon"></i> New
-          </router-link>
-          <router-link to="/test" class="item">
-            <i class="graduation cap icon"></i> Test
-          </router-link>
-        </div>
+  <div class="layout-wrapper">
+    <Toast />
+    <div class="header-wrapper">
+      <div class="header-content">
+        <Menubar :model="items" class="custom-menubar">
+        
+          <template #end>
+              <Button 
+                  :icon="isDarkMode ? 'pi pi-moon' : 'pi pi-sun'" 
+                  rounded 
+                  text 
+                  severity="secondary"
+                  @click="toggleTheme" 
+                  aria-label="Toggle Theme"
+              />
+          </template>
+        </Menubar>
       </div>
     </div>
 
-    <div class="ui text container">
-       <FlashMessage />
-      <div class="ui one column grid">
-        <div class="column">
-          <router-view />
-        </div>
-      </div>
+    <div class="layout-content">
+      <router-view />
     </div>
   </div>
 </template>
 
-<script>  
-import FlashMessage from '@/components/FlashMessage.vue';
+<script setup>
+import { ref, onMounted } from 'vue';
+import { useRouter } from 'vue-router';
+import Menubar from 'primevue/menubar';
+import Toast from 'primevue/toast';
+import Button from 'primevue/button';
 
-export default {
-  name: 'app',
-  components: {
-    FlashMessage,
-  },
-};
+const router = useRouter();
+const isDarkMode = ref(false);
+
+const items = ref([
+    {
+        label: 'Words',
+        icon: 'pi pi-comments',
+        command: () => router.push('/words')
+    },
+    {
+        label: 'New',
+        icon: 'pi pi-plus',
+        command: () => router.push('/words/new')
+    },
+    {
+        label: 'Test',
+        icon: 'pi pi-question',
+        command: () => router.push('/test')
+    },
+    
+]);
+
+function toggleTheme() {
+    isDarkMode.value = !isDarkMode.value;
+    const element = document.querySelector('html');
+    if (isDarkMode.value) {
+        element.classList.add('app-dark');
+    } else {
+        element.classList.remove('app-dark');
+    }
+    // Save preference
+    localStorage.setItem('theme', isDarkMode.value ? 'dark' : 'light');
+}
+
+onMounted(() => {
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme === 'dark') {
+        isDarkMode.value = true;
+        document.querySelector('html').classList.add('app-dark');
+    }
+});
 </script>
 
 <style>
-#app > div.navbar {
-  margin-bottom: 1.5em;
+:root {
+    --surface-ground: var(--p-surface-50);
+    --surface-card: var(--p-surface-0);
+    --surface-border: var(--p-content-border-color);
+    --text-color: var(--p-text-color);
 }
-.myFlash {
-  width: 250px;
-  margin: 10px;
-  position: absolute;
-  top: 50;
-  right: 0;
+
+.app-dark {
+    --surface-ground: var(--p-surface-950);
+    --surface-card: var(--p-surface-900);
 }
-input {
-  width: 300px;
+
+
+body {
+    margin: 0;
+    font-family: 'Montserrat', system-ui, -apple-system, BlinkMacSystemFont,
+                 'Segoe UI', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    background-color: var(--surface-ground);
+    color: var(--text-color);
+    transition: background-color 0.2s, color 0.2s;
 }
-div.label {
-  width: 120px;
+
+.header-wrapper {
+    background-color: var(--surface-card);
+    border-bottom: 1px solid var(--surface-border);
+    padding: 0.5rem 0; /* Padding dọc cho wrapper */
 }
-div.input {
-  margin-bottom: 10px;
+
+.header-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem; /* Padding ngang để content thụt vào trong */
 }
-button.ui.button {
-  margin-top: 15px;
-  display: block;
+
+.custom-menubar {
+    border: none !important;
+    padding: 0 !important; /* Reset padding mặc định của Menubar vì đã padding ở wrapper */
+    background: transparent !important;
+}
+
+.layout-content {
+    padding: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.mr-2 {
+    margin-right: 0.5rem;
 }
 </style>

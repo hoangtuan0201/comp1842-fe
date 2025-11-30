@@ -1,15 +1,25 @@
 import { createApp } from 'vue';
 import App from './App.vue';
 import router from './router';
+import PrimeVue from 'primevue/config';
+import lara from '@primevue/themes/lara';
+import ToastService from 'primevue/toastservice';
+import 'primeicons/primeicons.css';
 
-import 'semantic-ui-css/semantic.min.css';
+// thêm CSS semantic-ui-flag
+import 'semantic-ui-flag/flag.min.css';
 
+const app = createApp(App);
 
-// Vue.config.productionTip = false;
+app.use(router);
+app.use(PrimeVue, {
+    theme: {
+        preset: lara,
+        options: {
+            darkModeSelector: '.app-dark',
+        }
+    }
+});
+app.use(ToastService);
 
-// new Vue({
-//   router,
-//   render: h => h(App)
-// }).$mount('#app');
-
-createApp(App).use(router).mount('#app');
+app.mount('#app');

@@ -1,5 +1,4 @@
 import axios from 'axios';
-import { showFlash } from '@/helpers/flash';
 
 const baseURL = 'http://localhost:3000/words/';
 
@@ -8,12 +7,11 @@ const handleError = fn => async (...params) => {
     return await fn(...params);
   } catch (err) {
     console.error(err);
-    const status = err?.response?.status;
-    const text = err?.response?.statusText || 'Error';
-    showFlash(`${status}: ${text}`, 'error'); // giống vm.flash(...)
-    throw err; // nếu cần bắt thêm ở component
+    // Let the component handle the UI notification
+    throw err;
   }
 };
+
 export const api = {
   getWord: handleError(async id => {
     const res = await axios.get(baseURL + id);

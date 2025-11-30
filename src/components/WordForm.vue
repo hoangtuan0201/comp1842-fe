@@ -1,69 +1,78 @@
 <template>
-  <form action="#" @submit.prevent="onSubmit">
-    <p v-if="errorsPresent" class="error">Please fill out both fields!</p>
+  <form @submit.prevent="onSubmit" class="flex flex-column gap-4" style="max-width: 400px; margin: 0 auto;">
+    <Message v-if="errorsPresent" severity="error" :closable="false">Please fill out both fields!</Message>
 
-    <div class="ui labeled input fluid">
-      <div class="ui label">
-        <i class="germany flag"></i> German
-      </div>
-      <input
-        type="text"
-        placeholder="Enter word..."
-        v-model="localWord.german"
-      />
+    <div class="flex flex-column gap-2">
+        <label for="german" class="font-bold">German</label>
+        <div class="p-inputgroup">
+            <span class="p-inputgroup-addon">
+                <i class="germany flag"></i>
+            </span>
+            <InputText id="german" v-model="localWord.german" placeholder="Enter German word..." />
+        </div>
     </div>
 
-    <div class="ui labeled input fluid">
-      <div class="ui label">
-        <i class="united kingdom flag"></i> English
-      </div>
-      <input
-        type="text"
-        placeholder="Enter word..."
-        v-model="localWord.english"
-      />
+    <div class="flex flex-column gap-2">
+        <label for="english" class="font-bold">English</label>
+        <div class="p-inputgroup">
+            <span class="p-inputgroup-addon">
+                <i class="united kingdom flag"></i>
+            </span>
+            <InputText id="english" v-model="localWord.english" placeholder="Enter English word..." />
+        </div>
     </div>
 
-    <button class="positive ui button">Submit</button>
+    <Button type="submit" label="Submit" icon="pi pi-check" />
   </form>
 </template>
 
-<script>
-export default {
-  name: 'word-form',
-  props: {
-    word: {
-      type: Object,
-      required: false,
-      default: () => ({ english: '', german: '' })
-    }
-  },
-  data() {
-    return {
-      errorsPresent: false,
-      localWord: this.word ? { ...this.word } : { english: '', german: '' }
-    };
-  },
-  watch: {
-    word(newVal) {
-      this.localWord = newVal ? { ...newVal } : { english: '', german: '' };
-    }
-  },
-  methods: {
-    onSubmit: function() {
-      if (this.localWord.english === '' || this.localWord.german === '') {
-        this.errorsPresent = true;
-      } else {
-        this.errorsPresent = false;
-        this.$emit('createOrUpdate', this.localWord);
-      }
-    }
+<script setup>
+import { ref, watch, defineProps, defineEmits } from 'vue';
+import InputText from 'primevue/inputtext';
+import Button from 'primevue/button';
+import Message from 'primevue/message';
+
+const props = defineProps({
+  word: {
+    type: Object,
+    required: false,
+    default: () => ({ english: '', german: '' })
+  }
+});
+
+const emit = defineEmits(['createOrUpdate']);
+
+const localWord = ref(props.word ? { ...props.word } : { english: '', german: '' });
+const errorsPresent = ref(false);
+
+watch(() => props.word, (newVal) => {
+  localWord.value = newVal ? { ...newVal } : { english: '', german: '' };
+});
+
+const onSubmit = () => {
+  if (localWord.value.english === '' || localWord.value.german === '') {
+    errorsPresent.value = true;
+  } else {
+    errorsPresent.value = false;
+    emit('createOrUpdate', localWord.value);
   }
 };
 </script>
 
 <style scoped>
-.error {
-  color: red;
+.flex {
+    display: flex;
+}
+.flex-column {
+    flex-direction: column;
+}
+.gap-2 {
+    gap: 0.5rem;
+}
+.gap-4 {
+    gap: 1.5rem;
+}
+.font-bold {
+    font-weight: bold;
 }
 </style>
