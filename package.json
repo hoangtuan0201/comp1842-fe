@@ -11,6 +11,8 @@
     "@primevue/themes": "^4.5.0",
     "axios": "^1.13.2",
     "core-js": "^3.8.3",
+    "firebase": "^12.6.0",
+    "primeflex": "^4.0.0",
     "primeicons": "^7.0.0",
     "primevue": "^4.5.0",
     "semantic-ui-flag": "^2.5.0",

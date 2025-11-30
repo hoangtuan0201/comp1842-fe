@@ -1,20 +1,29 @@
 <template>
   <div class="layout-wrapper">
     <Toast />
-    <div class="header-wrapper">
+    <!-- Hide header on login/register pages -->
+    <div v-if="!$route.meta.hideHeader" class="header-wrapper">
       <div class="header-content">
         <Menubar :model="items" class="custom-menubar">
-        
           <template #end>
-              <Button 
+            <Button 
+                label="Logout"
+                icon="pi pi-sign-out"
+                text
+                severity="danger"
+                class="mr-2"
+                @click="onLogout"
+            />
+            <Button 
                   :icon="isDarkMode ? 'pi pi-moon' : 'pi pi-sun'" 
                   rounded 
                   text 
                   severity="secondary"
                   @click="toggleTheme" 
                   aria-label="Toggle Theme"
-              />
+            />
           </template>
+          
         </Menubar>
       </div>
     </div>
@@ -31,6 +40,7 @@ import { useRouter } from 'vue-router';
 import Menubar from 'primevue/menubar';
 import Toast from 'primevue/toast';
 import Button from 'primevue/button';
+import { logout } from '@/helpers/firebase';
 
 const router = useRouter();
 const isDarkMode = ref(false);
@@ -64,6 +74,14 @@ function toggleTheme() {
     }
     // Save preference
     localStorage.setItem('theme', isDarkMode.value ? 'dark' : 'light');
+}
+
+async function onLogout() {
+    try {
+        await logout();
+    } finally {
+        router.push('/login');
+    }
 }
 
 onMounted(() => {
