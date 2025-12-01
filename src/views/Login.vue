@@ -107,23 +107,62 @@ const onGoogleLogin = async () => {
 };
 
 const onEmailLogin = async () => {
-  if (!email.value || !password.value) {
-      toast.add({ severity: 'warn', summary: 'Warning', detail: 'Please enter email and password', life: 3000 });
-      return;
+  if (!email.value.trim() || !password.value.trim()) {
+    toast.add({
+      severity: 'warn',
+      summary: 'Missing information',
+      detail: 'Please enter both email and password.',
+      life: 3000
+    });
+    return;
+  }
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!emailRegex.test(email.value)) {
+    toast.add({
+      severity: 'warn',
+      summary: 'Invalid Email',
+      detail: 'Please enter a valid email address.',
+      life: 3000
+    });
+    return;
+  }
+  if (password.value.length < 6) {
+    toast.add({
+      severity: 'warn',
+      summary: 'Weak Password',
+      detail: 'Password must be at least 6 characters.',
+      life: 3000
+    });
+    return;
   }
 
   loading.value = true;
+
   try {
     const user = await loginWithEmail(email.value, password.value);
-    toast.add({ severity: 'success', summary: 'Success', detail: `Welcome back ${user.email}`, life: 3000 });
+    toast.add({
+      severity: 'success',
+      summary: 'Login Successful',
+      detail: `Welcome back, ${user.email}`,
+      life: 3000
+    });
+
     router.push('/words');
+
   } catch (err) {
     console.error(err);
-    toast.add({ severity: 'error', summary: 'Error', detail: 'Login failed. Check your credentials.', life: 3000 });
+    let message = 'Login failed. Please check your email and password.';
+    toast.add({
+      severity: 'error',
+      summary: 'Login Error',
+      detail: message,
+      life: 3000
+    });
   } finally {
     loading.value = false;
   }
 };
+
 </script>
 
 <style scoped>

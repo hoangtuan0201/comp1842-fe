@@ -1,7 +1,7 @@
 <template>
-  <div class="card">
-    <div style="text-align: center; margin-bottom: 1rem;">
-      <h1>Edit Word</h1>
+  <div class="surface-card p-4 shadow-2 border-round" style="max-width: 500px; margin: 0 auto;">
+    <div class="flex justify-content-center mb-4">
+        <h1 class="text-3xl font-medium text-900 m-0">Edit Word</h1>
     </div>
     <WordForm @createOrUpdate="createOrUpdate" :word="word" />
   </div>
@@ -39,13 +39,4 @@ const createOrUpdate = async (updatedWord) => {
 </script>
 
 <style scoped>
-.flex {
-    display: flex;
-}
-.justify-content-center {
-    justify-content: center;
-}
-.mb-4 {
-    margin-bottom: 1.5rem;
-}
 </style>

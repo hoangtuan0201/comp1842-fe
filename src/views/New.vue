@@ -1,7 +1,7 @@
 <template>
-  <div class="card">
-    <div style="text-align: center; margin-bottom: 1rem;">
-      <h1>New Word</h1>
+  <div class="surface-card p-4 shadow-2 border-round" style="max-width: 500px; margin: 0 auto;">
+    <div class="flex justify-content-center mb-4">
+        <h1 class="text-3xl font-medium text-900 m-0">New Word</h1>
     </div>
     <WordForm @createOrUpdate="createOrUpdate" />
   </div>
@@ -18,10 +18,9 @@ const toast = useToast();
 
 const createOrUpdate = async (word) => {
     try {
-        await api.createWord(word);
+        const res = await api.createWord(word);
         toast.add({ severity: 'success', summary: 'Success', detail: 'Word created successfully', life: 3000 });
-        // router.push(/words/${res._id}`);
-        router.push('/words'); 
+        router.push(`/words/${res._id}`);
     } catch (e) {
         toast.add({ severity: 'error', summary: 'Error', detail: 'Could not create word', life: 3000 });
     }
@@ -29,13 +28,4 @@ const createOrUpdate = async (word) => {
 </script>
 
 <style scoped>
-.flex {
-    display: flex;
-}
-.justify-content-center {
-    justify-content: center;
-}
-.mb-4 {
-    margin-bottom: 1.5rem;
-}
 </style>

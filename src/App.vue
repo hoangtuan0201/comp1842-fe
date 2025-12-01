@@ -115,7 +115,6 @@ body {
     -moz-osx-font-smoothing: grayscale;
     background-color: var(--surface-ground);
     color: var(--text-color);
-    transition: background-color 0.2s, color 0.2s;
 }
 
 .header-wrapper {

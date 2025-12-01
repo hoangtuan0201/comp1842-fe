@@ -1,37 +1,24 @@
 <template>
-  <div class="card">
-    <div style="text-align: center; margin-bottom: 1rem;">
-      <h1>Words</h1>
+  <div class="surface-card p-4 shadow-2 border-round">
+    <div class="flex justify-content-between align-items-center mb-4">
+        <h1 class="text-3xl font-medium text-900 m-0">Words</h1>
     </div>
     
-    <DataTable 
-      :value="words" 
-      tableStyle="max-width: 50rem; margin: 0 auto;" 
-      stripedRows 
-      showGridlines
-    >
+    <DataTable :value="words" tableStyle="min-width: 50rem" stripedRows showGridlines>
       <Column field="english" header="English" sortable></Column>
-      <Column field="german" header="German"></Column>
-      <Column field="vietnamese" header="Vietnamese"></Column>
-      <Column header="Actions" :exportable="false">
+      <Column field="german" header="German" sortable></Column>
+      <Column header="Actions" :exportable="false" style="min-width: 8rem">
         <template #body="slotProps">
-          <div class="flex gap-2">
-            <Button icon="pi pi-eye" text rounded severity="info" 
-                    aria-label="Show" 
-                    @click="router.push(`/words/${slotProps.data._id}`)" />
-            <Button icon="pi pi-pencil" text rounded severity="success" 
-                    aria-label="Edit" 
-                    @click="router.push(`/words/${slotProps.data._id}/edit`)" />
-            <Button icon="pi pi-trash" text rounded severity="danger" 
-                    aria-label="Delete" 
-                    @click="onDelete(slotProps.data._id)" />
-          </div>
+            <div class="flex gap-2">
+                <Button icon="pi pi-eye" text rounded severity="info" aria-label="Show" @click="router.push(`/words/${slotProps.data._id}`)" />
+                <Button icon="pi pi-pencil" text rounded severity="success" aria-label="Edit" @click="router.push(`/words/${slotProps.data._id}/edit`)" />
+                <Button icon="pi pi-trash" text rounded severity="danger" aria-label="Delete" @click="onDelete(slotProps.data._id)" />
+            </div>
         </template>
       </Column>
     </DataTable>
   </div>
 </template>
-
 
 <script setup>
 import { ref, onMounted } from 'vue';
@@ -70,14 +57,4 @@ const onDelete = async (id) => {
 </script>
 
 <style scoped>
-.flex {
-    display: flex;
-}
-.gap-2 {
-    gap: 0.5rem;
-}
-.mb-4 {
-    margin-bottom: 1.5rem;
-}
-
 </style>
