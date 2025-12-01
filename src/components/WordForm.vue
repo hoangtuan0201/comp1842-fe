@@ -13,11 +13,21 @@
 
     <div class="flex flex-column gap-2">
         <div class="p-inputgroup">
-            <span class="p-inputgroup-addon">
+            <span class="p-inputgroup-addon mr-1">
                 <img src="@/assets/flags/england.png" width="20" />
             </span>
             <span>English</span>
             <InputText id="english" v-model="localWord.english" placeholder="Enter English word..." class="w-full" />
+        </div>
+    </div>
+
+    <div class="flex flex-column gap-2">
+        <div class="p-inputgroup">
+            <span class="p-inputgroup-addon mr-1">
+                <img src="@/assets/flags/vietnam.png" width="20" />
+            </span>
+            <span>Vietnamese</span>
+            <InputText id="vietnamese" v-model="localWord.vietnamese" placeholder="Enter Vietnamese word..." class="w-full" />
         </div>
     </div>
 

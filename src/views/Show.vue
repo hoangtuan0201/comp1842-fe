@@ -6,7 +6,6 @@
     
     <div class="flex flex-column gap-4">
 
-      <!-- 🇩🇪 GERMAN -->
       <div class="p-inputgroup">
         <span class="p-inputgroup-addon mr-1">
             <img src="@/assets/flags/germany.png" width="20" />
@@ -15,13 +14,20 @@
         <InputText readonly :value="word.german" placeholder="German" class="w-full" />
       </div>
 
-      <!-- 🇬🇧 ENGLISH -->
       <div class="p-inputgroup">
         <span class="p-inputgroup-addon mr-1">
             <img src="@/assets/flags/england.png" width="20" />
         </span>
         <span>English</span>
         <InputText readonly :value="word.english" placeholder="English" class="w-full" />
+      </div>
+
+      <div class="p-inputgroup">
+        <span class="p-inputgroup-addon mr-1">
+            <img src="@/assets/flags/vietnam.png" width="20" />
+        </span>
+        <span>Vietnamese</span>
+        <InputText readonly :value="word.vietnamese" placeholder="Vietnamese" class="w-full" />
       </div>
 
       <Button

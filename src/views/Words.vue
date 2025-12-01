@@ -4,12 +4,13 @@
         <h1 class="text-3xl font-medium text-900 m-0">Words</h1>
     </div>
     
-    <DataTable :value="words" tableStyle="min-width: 50rem" stripedRows showGridlines>
-      <Column field="english" header="English" sortable></Column>
-      <Column field="german" header="German" sortable></Column>
-      <Column header="Actions" :exportable="false" style="min-width: 8rem">
+    <DataTable :value="words" stripedRows showGridlines sortMode="single">
+      <Column field="english" header="English" class="sm:table-cell" sortable></Column>
+      <Column field="german" header="German" sortable class="sm:table-cell"></Column>
+      <Column field="vietnamese" header="Vietnamese" sortable class="sm:table-cell"></Column>
+      <Column header="Actions" :exportable="false" style="width: 8rem">
         <template #body="slotProps">
-            <div class="flex gap-2">
+            <div class="flex gap-1">
                 <Button icon="pi pi-eye" text rounded severity="info" aria-label="Show" @click="router.push(`/words/${slotProps.data._id}`)" />
                 <Button icon="pi pi-pencil" text rounded severity="success" aria-label="Edit" @click="router.push(`/words/${slotProps.data._id}/edit`)" />
                 <Button icon="pi pi-trash" text rounded severity="danger" aria-label="Delete" @click="onDelete(slotProps.data._id)" />
