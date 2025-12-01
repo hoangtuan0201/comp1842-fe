@@ -69,9 +69,9 @@
           <Button label="Quit Test" icon="pi pi-arrow-left" text @click="resetTest" />
         </div>
         
-        <FlashcardMode v-if="activeMode === 'flashcard'" :words="words" @complete="onTestComplete" />
-        <QuizMode v-if="activeMode === 'quiz'" :words="words" @complete="onTestComplete" />
-        <TypingMode v-if="activeMode === 'typing'" :words="words" @complete="onTestComplete" />
+        <FlashcardMode v-if="activeMode === 'flashcard'" :words="testWords" @complete="onTestComplete" />
+        <QuizMode v-if="activeMode === 'quiz'" :words="testWords" @complete="onTestComplete" />
+        <TypingMode v-if="activeMode === 'typing'" :words="testWords" @complete="onTestComplete" />
       </div>
 
       <!-- Results Dashboard -->
@@ -97,6 +97,7 @@ import TypingMode from '../components/test/TypingMode.vue';
 import TestResult from '../components/test/TestResult.vue';
 
 const words = ref([]);
+const testWords = ref([]);
 const loading = ref(true);
 const error = ref(null);
 
@@ -117,6 +118,14 @@ const fetchWords = async () => {
 };
 
 const startTest = (mode) => {
+  // Randomly select up to 10 words from the user's words
+  const shuffled = [...words.value];
+  for (let i = shuffled.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+  }
+  testWords.value = shuffled.slice(0, 10);
+
   activeMode.value = mode;
   testResults.value = null;
 };
