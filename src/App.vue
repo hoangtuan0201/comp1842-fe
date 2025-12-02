@@ -126,7 +126,7 @@ body {
 .header-content {
     max-width: 1200px;
     margin: 0 auto;
-    padding: 0 2rem; /* Padding ngang để content thụt vào trong */
+    padding: 0.5rem 2rem; /* Padding ngang để content thụt vào trong */
 }
 
 .custom-menubar {

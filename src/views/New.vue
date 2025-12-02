@@ -17,13 +17,9 @@ const router = useRouter();
 const toast = useToast();
 
 const createOrUpdate = async (word) => {
-    try {
-        const res = await api.createWord(word);
-        toast.add({ severity: 'success', summary: 'Success', detail: 'Word created successfully', life: 3000 });
-        router.push(`/words/${res._id}`);
-    } catch (e) {
-        toast.add({ severity: 'error', summary: 'Error', detail: 'Could not create word', life: 3000 });
-    }
+    const res = await api.createWord(word);
+    toast.add({ severity: 'success', summary: 'Success', detail: 'Word created successfully', life: 3000 });
+    router.push(`/words/${res._id}`);
 };
 </script>
 

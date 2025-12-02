@@ -67,7 +67,6 @@ const onSubmit = () => {
   } else {
     errorsPresent.value = false;
     emit('createOrUpdate', localWord.value);
-    toast.add({ severity: 'success', summary: 'Success', detail: 'Word submitted successfully', life: 3000 });
   }
 };
 </script>
