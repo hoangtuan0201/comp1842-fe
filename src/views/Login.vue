@@ -101,8 +101,9 @@ const onGoogleLogin = async () => {
     const { user } = await loginWithGoogle();
     toast.add({ severity: 'success', summary: 'Success', detail: `Welcome ${user.displayName}`, life: 3000 });
     router.push('/words');
-  } catch {
-    toast.add({ severity: 'error', summary: 'Error', detail: 'Google login failed', life: 3000 });
+  } catch (error) {
+    console.error('Google login error:', error);
+    toast.add({ severity: 'error', summary: 'Error', detail: `Google login failed: ${error.message || 'Check console'}`, life: 3000 });
   }
 };
 
